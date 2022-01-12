@@ -16,7 +16,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 @Data
 @Entity
 @Table(name = "movies_series")
-public class MovieSeries {
+public class MovieSeriesEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -35,13 +35,13 @@ public class MovieSeries {
     
     
     @ManyToMany(mappedBy = "movies")
-    private Set<Character> characters = new HashSet<>();
+    private Set<CharacterEntity> characters = new HashSet<>();
 
     @JoinTable(name = "movie_genre",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @ManyToMany
-    private Set<Genre> genres = new HashSet<>();
+    private Set<GenreEntity> genres = new HashSet<>();
     
     
 }

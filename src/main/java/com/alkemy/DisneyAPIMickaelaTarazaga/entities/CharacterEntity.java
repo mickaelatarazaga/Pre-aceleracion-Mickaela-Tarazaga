@@ -5,15 +5,16 @@
  */
 package com.alkemy.DisneyAPIMickaelaTarazaga.entities;
 
-import java.sql.Date;
+import java.awt.Image;
+import java.util.*;
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
+
 
 /**
  *
@@ -23,24 +24,29 @@ import org.hibernate.annotations.GenericGenerator;
 @NoArgsConstructor
 @Data
 @Entity
-@Table(name = "users")
-public class User {
-    
+@Table(name = "characters")
+
+public class CharacterEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    @Column(name = "first_name")
-    private String firstName;
-    @Column(name = "last_name")
-    private String lastName;
     
-    @Email
-    private String email;
+    private String image; 
     
-    private String password;
+    private String name;
+    
+    private Integer age;
+    
+    private Float weight;
+    
+    private String history;
+    
+    @JoinTable(name = "character_movie",
+            joinColumns = @JoinColumn(name = "character_id"),
+            inverseJoinColumns = @JoinColumn(name = "movie_id"))
+    @ManyToMany
+    private Set<MovieSeriesEntity> movies = new HashSet<>();
 
-   
-   
-    
+
 }

@@ -20,7 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 @Data
 @Entity
 @Table(name = "genres")
-public class Genre {
+public class GenreEntity {
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
@@ -31,7 +31,7 @@ public class Genre {
     private String name;
     
     @ManyToMany(mappedBy = "genres")
-    private Set<MovieSeries> movies = new HashSet<>();
+    private Set<MovieSeriesEntity> movies = new HashSet<>();
       
     
 }
