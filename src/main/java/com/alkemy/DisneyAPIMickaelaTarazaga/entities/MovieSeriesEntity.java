@@ -1,13 +1,10 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.entities;
-import java.awt.Image;
 import java.sql.Date;
 import java.util.*;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -26,8 +23,8 @@ public class MovieSeriesEntity {
     
     private String title;
     
-    @Column(name = "creationDate")
-    @DateTimeFormat(pattern = "DD/MM/YYYY" )
+    @Column(name = "creation_date")
+    @DateTimeFormat(pattern = "yyyy/mm/dd" )
     private Date creationDate;
     
     
