@@ -1,16 +1,16 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.dtos;
 
-import java.sql.Date;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class MovieSeriesFilterDTO {
-    
+public class GenreSlimDto {
+
     private String id;
+
+    private String name;
+
     private String image;
-    private String title;
-    private Date creationDate;
-    
+
 }

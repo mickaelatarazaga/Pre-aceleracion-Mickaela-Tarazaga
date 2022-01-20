@@ -1,18 +1,20 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.entities;
-import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.*;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "movies_series")
+@Table(name = "movies")
 public class MovieSeriesEntity {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -23,9 +25,9 @@ public class MovieSeriesEntity {
     
     private String title;
     
+    
     @Column(name = "creation_date")
-    @DateTimeFormat(pattern = "yyyy/mm/dd" )
-    private Date creationDate;
+    private LocalDateTime creationDate;
     
     
     private Integer score;
