@@ -1,21 +1,18 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.entities;
-import java.awt.Image;
-import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.*;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.Getter;
+import lombok.*;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Getter
+@Setter
 @Entity
-@Table(name = "movies_series")
+@Table(name = "movies")
 public class MovieSeriesEntity {
     @Id
     @GeneratedValue(generator = "uuid")
@@ -26,9 +23,9 @@ public class MovieSeriesEntity {
     
     private String title;
     
-    @Column(name = "creationDate")
-    @DateTimeFormat(pattern = "DD/MM/YYYY" )
-    private Date creationDate;
+    
+    @Column(name = "creation_date")
+    private LocalDateTime creationDate;
     
     
     private Integer score;
@@ -37,8 +34,12 @@ public class MovieSeriesEntity {
     @ManyToMany(mappedBy = "movies")
     private Set<CharacterEntity> characters = new HashSet<>();
 
+    
+    //NOMBRE QUE SE LE DARÁ A LA TABLA INTERMEDIA
     @JoinTable(name = "movie_genre",
+            //COMO SE JOINEA DE ESTE LADO
             joinColumns = @JoinColumn(name = "movie_id"),
+            //COMO SE JOINEA DEL OTRO LADO
             inverseJoinColumns = @JoinColumn(name = "genre_id"))
     @ManyToMany
     private Set<GenreEntity> genres = new HashSet<>();

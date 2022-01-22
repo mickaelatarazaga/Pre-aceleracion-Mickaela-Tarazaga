@@ -5,7 +5,6 @@
  */
 package com.alkemy.DisneyAPIMickaelaTarazaga.entities;
 
-import java.awt.Image;
 import java.util.*;
 import javax.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,8 +41,12 @@ public class CharacterEntity {
     
     private String history;
     
+    
+    //NOMBRE DE LA TABLA INTERMEDIA
     @JoinTable(name = "character_movie",
+            //COMO SE JOINEA DE ESTE LADO
             joinColumns = @JoinColumn(name = "character_id"),
+            //COMO SE JOINEA DE EL OTRO LADO
             inverseJoinColumns = @JoinColumn(name = "movie_id"))
     @ManyToMany
     private Set<MovieSeriesEntity> movies = new HashSet<>();
