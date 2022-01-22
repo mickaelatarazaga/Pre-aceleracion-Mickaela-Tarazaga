@@ -43,11 +43,7 @@ public class MovieSeriesController {
     private final IMovieService movieService;
         
 
-    @Operation(description = "Get all movies")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All movies are shown", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = MovieSlimDto.class)) })
-    })
+    
     @GetMapping()
     public ResponseEntity<List<MovieSlimDto>> getAllMovies() {
 
@@ -75,13 +71,7 @@ public class MovieSeriesController {
 
     }
 
-    @Operation(description = "Find a movie by its ID and shows its details")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Movie found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDto.class)) }),
-            @ApiResponse(responseCode = "404", description = "No movie have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @GetMapping("/{id}")
     public ResponseEntity<MovieDto> findMovieById(@PathVariable("id") String movieId) {
 
@@ -105,12 +95,7 @@ public class MovieSeriesController {
 
     }
 
-    @Operation(description = "Delete a movie by its ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Movie deleted", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No movie with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteMovieById(@PathVariable("id") String id) {
 
@@ -120,13 +105,6 @@ public class MovieSeriesController {
 
     }
 
-    @Operation(description = "Save a movie")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Movie created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDto.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
     @PostMapping()
     public ResponseEntity<MovieDto> saveMovie(@Valid @RequestBody MovieDto movie) {
 
@@ -137,15 +115,6 @@ public class MovieSeriesController {
     }
     
 
-    @Operation(description = "Update a movie's info")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Movie updated", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = MovieDto.class)) }),
-            @ApiResponse(responseCode = "404", description = "No movie with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
     @PatchMapping("/{id}")
     public ResponseEntity<MovieDto> updateMovie(@Valid @org.springframework.web.bind.annotation.RequestBody MovieDto movie, @PathVariable("id") String id){
 
@@ -155,13 +124,7 @@ public class MovieSeriesController {
 
     }
 
-    @Operation(description = "Shows all the genres of the movie with the given ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All genres of the movie are shown", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = GenreSlimDto.class)) }),
-            @ApiResponse(responseCode = "404", description = "No movie with the given ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) } )
-    })
+   
     @GetMapping("{id}/genres")
     public ResponseEntity<List<GenreSlimDto>> getMovieGenres(@PathVariable("id") String movieId) {
 
@@ -169,14 +132,7 @@ public class MovieSeriesController {
 
     }
 
-    @Operation(description = "Given a list of GenreID's, add all the corresponding genres to the movie")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Genres added successfully", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No movie with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @PutMapping("{id}/genres")
     public ResponseEntity<?> addGenresToMovie(@Valid @org.springframework.web.bind.annotation.RequestBody ListOfStringDto genresIds, @PathVariable("id") String movieId) {
 
@@ -186,14 +142,7 @@ public class MovieSeriesController {
 
     }
 
-    @Operation(description = "Given a list of GenreID's, remove all the corresponding genres from the movie")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Genres removed successfully", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No movie with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @DeleteMapping("{id}/genres")
     public ResponseEntity<?> removeGenresFromMovie(@Valid @org.springframework.web.bind.annotation.RequestBody ListOfStringDto genresIds, @PathVariable("id") String movieId) {
 

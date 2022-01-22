@@ -35,11 +35,6 @@ public class CharacterController {
     private final MapStructMapper mapStructMapper;
     private final ICharacterService characterService;
 
-    @Operation(description = "Gets all characters")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All characters are shown", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterSlimDto.class)) })
-    })
     @GetMapping()
     public ResponseEntity<List<CharacterSlimDto>> getAllCharacters() {
 
@@ -47,13 +42,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Finds a character by his ID and shows his details")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Character found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterDto.class)) }),
-            @ApiResponse(responseCode = "404", description = "No character have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @GetMapping("/{id}")
     public ResponseEntity<CharacterDto> getCharacterById(@PathVariable("id") String id) {
 
@@ -82,12 +71,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Deletes a character by his ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Character deleted", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No character with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCharacterById(@PathVariable("id") String id) {
 
@@ -97,13 +81,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Saves a character")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "201", description = "Character created", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterDto.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @PostMapping()
     public ResponseEntity<CharacterDto> saveCharacter(@Valid @RequestBody CharacterDto character) {
 
@@ -113,15 +91,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Updates a character's info")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "Character updated", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterDto.class)) }),
-            @ApiResponse(responseCode = "404", description = "No character with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @PatchMapping("/{id}")
     public ResponseEntity<CharacterDto> updateCharacter(@Valid @RequestBody CharacterDto character, @PathVariable("id") String id) {
 
@@ -131,13 +101,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Shows all the movies of the character with the given ID")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "200", description = "All movies of the character are shown", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = CharacterSlimDto.class)) }),
-            @ApiResponse(responseCode = "404", description = "No character with the given ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) } )
-    })
+    
     @GetMapping("{id}/movies")
     public ResponseEntity<List<MovieSlimDto>> getCharacterMovies(@PathVariable("id") String characterId) {
 
@@ -145,14 +109,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Given a list of MovieID's, adds all the corresponding movies to the character's movies")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Movies added", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No character with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @PutMapping("{id}/movies")
     public ResponseEntity<?> addMoviesToCharacter(@Valid @RequestBody ListOfStringDto moviesIds, @PathVariable("id") String characterId) {
 
@@ -162,14 +119,7 @@ public class CharacterController {
 
     }
 
-    @Operation(description = "Given a list of Movie ID's, removes all the corresponding movies from the character's movies")
-    @ApiResponses(value = {
-            @ApiResponse(responseCode = "204", description = "Movies removed", content = @Content),
-            @ApiResponse(responseCode = "404", description = "No character with that ID have been found", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) }),
-            @ApiResponse(responseCode = "400", description = "There have been validation errors", content = {
-                    @Content(mediaType = "application/json", schema = @Schema(implementation = ErrorDetails.class)) })
-    })
+    
     @DeleteMapping("{id}/movies")
     public ResponseEntity<?> removeMoviesFromCharacter(@Valid @RequestBody ListOfStringDto moviesIds, @PathVariable("id") String characterId) {
 
