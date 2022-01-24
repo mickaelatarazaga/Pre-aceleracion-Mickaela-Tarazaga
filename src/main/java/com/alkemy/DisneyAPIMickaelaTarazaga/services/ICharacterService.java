@@ -1,26 +1,26 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.services;
+import com.alkemy.DisneyAPIMickaelaTarazaga.entities.Character;
 
-import com.alkemy.DisneyAPIMickaelaTarazaga.entities.CharacterEntity;
 import java.util.List;
 
 public interface ICharacterService {
 
-    List<CharacterEntity> getAll();
+    List<Character> getAll();
 
-    CharacterEntity findById(String characterId);
+    Character findById(Long characterId);
 
-    List<CharacterEntity> findByName(String name);
+    List<Character> findByName(String name);
 
-    List<CharacterEntity> findByAge(Integer age);
+    List<Character> findByAge(Integer age);
 
-    void delete(String id);
+    void delete(Long id);
 
-    CharacterEntity save(CharacterEntity character);
+    Character save(Character character);
 
-    List<CharacterEntity> findByMovieId(String idMovie);
+    List<Character> findByMovieId(Long idMovie);
 
-    void addMovies(String characterId, List<String> moviesIds);
+    void addMovies(Long characterId, List<Long> moviesIds);
 
-    void removeMovies(String characterId, List<String> moviesIds);
+    void removeMovies(Long characterId, List<Long> moviesIds);
 
 }

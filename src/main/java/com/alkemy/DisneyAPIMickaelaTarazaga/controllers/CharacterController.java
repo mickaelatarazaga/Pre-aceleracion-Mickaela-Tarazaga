@@ -1,13 +1,9 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.controllers;
-
-import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.CharacterDto;
-import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.CharacterSlimDto;
-import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.ListOfStringDto;
-import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.MovieSlimDto;
-import com.alkemy.DisneyAPIMickaelaTarazaga.entities.CharacterEntity;
-import com.alkemy.DisneyAPIMickaelaTarazaga.exceptions.ErrorDetails;
-import com.alkemy.DisneyAPIMickaelaTarazaga.mappers.MapStructMapper;
-import com.alkemy.DisneyAPIMickaelaTarazaga.services.ICharacterService;
+import com.alkemy.DisneyAPIMickaelaTarazaga.services.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.mappers.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.exceptions.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.entities.Character;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -17,6 +13,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -32,9 +30,12 @@ import java.util.List;
 @SecurityRequirement(name = "bearerAuth")
 public class CharacterController {
 
-    private final MapStructMapper mapStructMapper;
-    private final ICharacterService characterService;
+	@Autowired
+    private MapStructMapper mapStructMapper;
+	@Autowired
+    private  ICharacterService characterService;
 
+    
     @GetMapping()
     public ResponseEntity<List<CharacterSlimDto>> getAllCharacters() {
 
@@ -44,7 +45,7 @@ public class CharacterController {
 
     
     @GetMapping("/{id}")
-    public ResponseEntity<CharacterDto> getCharacterById(@PathVariable("id") String id) {
+    public ResponseEntity<CharacterDto> getCharacterById(@PathVariable("id") Long id) {
 
         return new ResponseEntity<>(mapStructMapper.characterToCharacterDto(characterService.findById(id)), HttpStatus.OK);
 
@@ -65,7 +66,7 @@ public class CharacterController {
     }
 
     @GetMapping(params="movie")
-    public ResponseEntity<List<CharacterDto>> findCharacterByMovieId(@Parameter(description = "Filter by MovieID") @RequestParam(value = "movie", required = false) String movieId) {
+    public ResponseEntity<List<CharacterDto>> findCharacterByMovieId(@Parameter(description = "Filter by MovieID") @RequestParam(value = "movie", required = false) Long movieId) {
 
         return new ResponseEntity<>(mapStructMapper.charactersToCharacterDtos(characterService.findByMovieId(movieId)), HttpStatus.OK);
 
@@ -73,7 +74,7 @@ public class CharacterController {
 
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteCharacterById(@PathVariable("id") String id) {
+    public ResponseEntity<HttpStatus> deleteCharacterById(@PathVariable("id") Long id) {
 
         characterService.delete(id);
 
@@ -85,7 +86,7 @@ public class CharacterController {
     @PostMapping()
     public ResponseEntity<CharacterDto> saveCharacter(@Valid @RequestBody CharacterDto character) {
 
-        CharacterEntity characterCreated = characterService.save(mapStructMapper.characterDtoToCharacter(character));
+        Character characterCreated = characterService.save(mapStructMapper.characterDtoToCharacter(character));
 
         return new ResponseEntity<>(mapStructMapper.characterToCharacterDto(characterCreated), HttpStatus.CREATED);
 
@@ -93,9 +94,9 @@ public class CharacterController {
 
     
     @PatchMapping("/{id}")
-    public ResponseEntity<CharacterDto> updateCharacter(@Valid @RequestBody CharacterDto character, @PathVariable("id") String id) {
+    public ResponseEntity<CharacterDto> updateCharacter(@Valid @RequestBody CharacterDto character, @PathVariable("id") Long id) {
 
-        CharacterEntity characterUpdated = characterService.save(mapStructMapper.updateCharacterFromDto(character, characterService.findById(id)));
+        Character characterUpdated = characterService.save(mapStructMapper.updateCharacterFromDto(character, characterService.findById(id)));
 
         return new ResponseEntity<>(mapStructMapper.characterToCharacterDto(characterUpdated), HttpStatus.OK);
 
@@ -103,7 +104,7 @@ public class CharacterController {
 
     
     @GetMapping("{id}/movies")
-    public ResponseEntity<List<MovieSlimDto>> getCharacterMovies(@PathVariable("id") String characterId) {
+    public ResponseEntity<List<MovieSlimDto>> getCharacterMovies(@PathVariable("id") Long characterId) {
 
         return new ResponseEntity<>(mapStructMapper.moviesToMovieSlimDtos(new ArrayList<>(characterService.findById(characterId).getMovies())), HttpStatus.OK);
 
@@ -111,7 +112,7 @@ public class CharacterController {
 
     
     @PutMapping("{id}/movies")
-    public ResponseEntity<?> addMoviesToCharacter(@Valid @RequestBody ListOfStringDto moviesIds, @PathVariable("id") String characterId) {
+    public ResponseEntity<?> addMoviesToCharacter(@Valid @RequestBody ListOfLongDto moviesIds, @PathVariable("id") Long characterId) {
 
         characterService.addMovies(characterId, moviesIds.getList());
 
@@ -121,7 +122,7 @@ public class CharacterController {
 
     
     @DeleteMapping("{id}/movies")
-    public ResponseEntity<?> removeMoviesFromCharacter(@Valid @RequestBody ListOfStringDto moviesIds, @PathVariable("id") String characterId) {
+    public ResponseEntity<?> removeMoviesFromCharacter(@Valid @RequestBody ListOfLongDto moviesIds, @PathVariable("id") Long characterId) {
 
         characterService.removeMovies(characterId, moviesIds.getList());
 

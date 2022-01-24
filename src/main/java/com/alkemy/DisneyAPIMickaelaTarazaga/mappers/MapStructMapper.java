@@ -1,41 +1,41 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.mappers;
 import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.*;
 import com.alkemy.DisneyAPIMickaelaTarazaga.entities.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.entities.Character;
+
 import java.util.List;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
 public interface MapStructMapper  {
-  
-    CharacterSlimDto characterToCharacterSlimDto(CharacterEntity character);
 
-    CharacterDto characterToCharacterDto(CharacterEntity character);
+    CharacterSlimDto characterToCharacterSlimDto(Character character);
 
-    CharacterEntity characterDtoToCharacter(CharacterDto character);
+    CharacterDto characterToCharacterDto(Character character);
+
+    Character characterDtoToCharacter(CharacterDto character);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
                  nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    CharacterEntity updateCharacterFromDto(CharacterDto characterDto, @MappingTarget CharacterEntity character);
+    Character updateCharacterFromDto(CharacterDto characterDto, @MappingTarget Character character);
 
-    List<CharacterSlimDto> charactersToCharacterSlimDtos(List<CharacterEntity> characters);
+    List<CharacterSlimDto> charactersToCharacterSlimDtos(List<Character> characters);
 
-    List<CharacterDto> charactersToCharacterDtos(List<CharacterEntity> characters);
+    List<CharacterDto> charactersToCharacterDtos(List<Character> characters);
 
-    MovieSlimDto movieToMovieSlimDto(MovieSeriesEntity movie);
+    MovieSlimDto movieToMovieSlimDto(Movie movie);
 
-    MovieDto movieToMovieDto(MovieSeriesEntity movie);
+    MovieDto movieToMovieDto(Movie movie);
 
-    MovieSeriesEntity movieDtoToMovie(MovieDto movie);
+    Movie movieDtoToMovie(MovieDto movie);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
             nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    MovieSeriesEntity updateMovieFromDto(MovieDto movieDto, @MappingTarget MovieSeriesEntity movie);
+    Movie updateMovieFromDto(MovieDto movieDto, @MappingTarget Movie movie);
 
-    List<MovieSlimDto> moviesToMovieSlimDtos(List<MovieSeriesEntity> movies);
+    List<MovieSlimDto> moviesToMovieSlimDtos(List<Movie> movies);
 
-    List<MovieDto> moviesToMovieDtos(List<MovieSeriesEntity> movies);
+    List<MovieDto> moviesToMovieDtos(List<Movie> movies);
 
-    List<GenreSlimDto> genresToGenreSlimDtos(List<GenreEntity> genres);
-
-
+    List<GenreSlimDto> genresToGenreSlimDtos(List<Genre> genres);
 }

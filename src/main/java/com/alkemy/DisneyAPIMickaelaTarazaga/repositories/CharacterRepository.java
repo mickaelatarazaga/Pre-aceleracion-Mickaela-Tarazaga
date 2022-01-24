@@ -1,19 +1,21 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.repositories;
+import com.alkemy.DisneyAPIMickaelaTarazaga.entities.Character;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.alkemy.DisneyAPIMickaelaTarazaga.entities.*;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface CharacterRepository extends JpaRepository<CharacterEntity, String> {
+public interface CharacterRepository extends JpaRepository<Character, Long> {
 
-    Optional<CharacterEntity> findById(String id);
+    Optional<Character> findById(Long id);
 
-    List<CharacterEntity> findByName(String name);
+    List<Character> findByName(String name);
 
-    List<CharacterEntity> findByAge(Integer age);
+    List<Character> findByAge(Integer age);
 
-    List<CharacterEntity> findByMoviesId(String id);
+    List<Character> findByMoviesId(Long id);
+
+    
 
 }

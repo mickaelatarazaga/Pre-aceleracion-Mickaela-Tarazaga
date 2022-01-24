@@ -1,37 +1,29 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.alkemy.DisneyAPIMickaelaTarazaga.services;
+import  com.alkemy.DisneyAPIMickaelaTarazaga.entities.*;
 
-import com.alkemy.DisneyAPIMickaelaTarazaga.entities.GenreEntity;
-import com.alkemy.DisneyAPIMickaelaTarazaga.entities.MovieSeriesEntity;
 import java.util.List;
 import java.util.Set;
 
-/**
- *
- * @author Mickaela Tarazaga
- */
 public interface IMovieService {
-    List<MovieSeriesEntity> getAll();
 
-    List<MovieSeriesEntity> findAllOrderByCreationDate(String order);
+    List<Movie> getAll();
 
-    MovieSeriesEntity findById(String movieId);
+    List<Movie> findAllOrderByCreationDate(String order);
 
-    List<MovieSeriesEntity> findByTitle(String title);
+    Movie findById(Long movieId);
 
-    void delete(String id);
+    List<Movie> findByTitle(String title);
 
-    MovieSeriesEntity save(MovieSeriesEntity movie);
+    void delete(Long id);
 
-    List<MovieSeriesEntity> findByGenreId(String idGenre);
+    Movie save(Movie movie);
 
-    Set<GenreEntity> getGenres(String id);
+    List<Movie> findByGenreId(Long idGenre);
 
-    void addGenres(String movieId, List<String> genresIds);
+    Set<Genre> getGenres(Long id);
 
-    void removeGenres(String movieId, List<String> genresIds);
+    void addGenres(Long movieId, List<Long> genresIds);
+
+    void removeGenres(Long movieId, List<Long> genresIds);
+
 }

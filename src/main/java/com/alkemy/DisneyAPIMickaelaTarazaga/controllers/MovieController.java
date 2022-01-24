@@ -1,47 +1,39 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.controllers;
-
-import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.MovieDto;
-import com.alkemy.DisneyAPIMickaelaTarazaga.entities.MovieSeriesEntity;
 import com.alkemy.DisneyAPIMickaelaTarazaga.services.*;
-import com.alkemy.DisneyAPIMickaelaTarazaga.mappers.MapStructMapper;
+import com.alkemy.DisneyAPIMickaelaTarazaga.mappers.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.exceptions.*;
+import com.alkemy.DisneyAPIMickaelaTarazaga.entities.*;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import java.util.ArrayList;
-import java.util.List;
-import javax.validation.Valid;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.*;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.*;
-import com.alkemy.DisneyAPIMickaelaTarazaga.exceptions.ErrorDetails;
-import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "Movies")
+import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
+
 @RequiredArgsConstructor
+@Tag(name = "Movies")
 @RestController
 @RequestMapping("/movies")
-public class MovieSeriesController {
-    
-   
-    private final MapStructMapper mapStructMapper;
-    
-    private final IMovieService movieService;
-        
+@SecurityRequirement(name = "bearerAuth")
+public class MovieController {
+
+	@Autowired
+    private MapStructMapper mapStructMapper;
+	@Autowired
+    private IMovieService movieService;
 
     
     @GetMapping()
@@ -57,7 +49,7 @@ public class MovieSeriesController {
             @Parameter(description = "Get all movies order by creation date (ASC | DESC)")
             @RequestParam(value ="order", required = false) String order) {
 
-        List<MovieSeriesEntity> movies = movieService.findAllOrderByCreationDate(order);
+        List<Movie> movies = movieService.findAllOrderByCreationDate(order);
 
         if(movies == null) {
 
@@ -73,7 +65,7 @@ public class MovieSeriesController {
 
     
     @GetMapping("/{id}")
-    public ResponseEntity<MovieDto> findMovieById(@PathVariable("id") String movieId) {
+    public ResponseEntity<MovieDto> findMovieById(@PathVariable("id") Long movieId) {
 
         return new ResponseEntity<>(mapStructMapper.movieToMovieDto(movieService.findById(movieId)), HttpStatus.OK);
 
@@ -89,7 +81,7 @@ public class MovieSeriesController {
 
     @GetMapping(params="genre")
     public ResponseEntity<List<MovieDto>> findMovieByGenre(
-            @Parameter(description = "Filter movies by genreID") @RequestParam(value = "genre", required = false) String genreId) {
+            @Parameter(description = "Filter movies by genreID") @RequestParam(value = "genre", required = false) Long genreId) {
 
         return new ResponseEntity<>(mapStructMapper.moviesToMovieDtos(movieService.findByGenreId(genreId)), HttpStatus.OK);
 
@@ -97,7 +89,7 @@ public class MovieSeriesController {
 
     
     @DeleteMapping("/{id}")
-    public ResponseEntity<HttpStatus> deleteMovieById(@PathVariable("id") String id) {
+    public ResponseEntity<HttpStatus> deleteMovieById(@PathVariable("id") Long id) {
 
         movieService.delete(id);
 
@@ -105,28 +97,29 @@ public class MovieSeriesController {
 
     }
 
+    
     @PostMapping()
     public ResponseEntity<MovieDto> saveMovie(@Valid @RequestBody MovieDto movie) {
 
-        MovieSeriesEntity movieCreated = movieService.save(mapStructMapper.movieDtoToMovie(movie));
+        Movie movieCreated = movieService.save(mapStructMapper.movieDtoToMovie(movie));
 
         return new ResponseEntity<>(mapStructMapper.movieToMovieDto(movieCreated), HttpStatus.CREATED);
 
     }
-    
 
+   
     @PatchMapping("/{id}")
-    public ResponseEntity<MovieDto> updateMovie(@Valid @org.springframework.web.bind.annotation.RequestBody MovieDto movie, @PathVariable("id") String id){
+    public ResponseEntity<MovieDto> updateMovie(@Valid @RequestBody MovieDto movie, @PathVariable("id") Long id){
 
-        MovieSeriesEntity movieUpdated = movieService.save(mapStructMapper.updateMovieFromDto(movie, movieService.findById(id)));
+        Movie movieUpdated = movieService.save(mapStructMapper.updateMovieFromDto(movie, movieService.findById(id)));
 
         return new ResponseEntity<>(mapStructMapper.movieToMovieDto(movieUpdated), HttpStatus.OK);
 
     }
 
-   
+    
     @GetMapping("{id}/genres")
-    public ResponseEntity<List<GenreSlimDto>> getMovieGenres(@PathVariable("id") String movieId) {
+    public ResponseEntity<List<GenreSlimDto>> getMovieGenres(@PathVariable("id") Long movieId) {
 
         return new ResponseEntity<>(mapStructMapper.genresToGenreSlimDtos(new ArrayList<>(movieService.getGenres(movieId))), HttpStatus.OK);
 
@@ -134,7 +127,7 @@ public class MovieSeriesController {
 
     
     @PutMapping("{id}/genres")
-    public ResponseEntity<?> addGenresToMovie(@Valid @org.springframework.web.bind.annotation.RequestBody ListOfStringDto genresIds, @PathVariable("id") String movieId) {
+    public ResponseEntity<?> addGenresToMovie(@Valid @RequestBody ListOfLongDto genresIds, @PathVariable("id") Long movieId) {
 
         movieService.addGenres(movieId, genresIds.getList());
 
@@ -144,7 +137,7 @@ public class MovieSeriesController {
 
     
     @DeleteMapping("{id}/genres")
-    public ResponseEntity<?> removeGenresFromMovie(@Valid @org.springframework.web.bind.annotation.RequestBody ListOfStringDto genresIds, @PathVariable("id") String movieId) {
+    public ResponseEntity<?> removeGenresFromMovie(@Valid @RequestBody ListOfLongDto genresIds, @PathVariable("id") Long movieId) {
 
         movieService.removeGenres(movieId, genresIds.getList());
 
@@ -152,5 +145,4 @@ public class MovieSeriesController {
 
     }
 
-        
 }

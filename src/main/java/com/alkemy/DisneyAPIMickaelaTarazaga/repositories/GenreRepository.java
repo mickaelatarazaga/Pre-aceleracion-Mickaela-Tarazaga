@@ -1,7 +1,6 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.repositories;
-
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.alkemy.DisneyAPIMickaelaTarazaga.entities.*;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface GenreRepository extends JpaRepository<GenreEntity, String> {
+public interface GenreRepository extends JpaRepository<Genre, Long> {
 }
