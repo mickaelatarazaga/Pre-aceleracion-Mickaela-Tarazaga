@@ -2,17 +2,10 @@ package com.alkemy.DisneyAPIMickaelaTarazaga.controllers;
 import com.alkemy.DisneyAPIMickaelaTarazaga.services.*;
 import com.alkemy.DisneyAPIMickaelaTarazaga.mappers.*;
 import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.*;
-import com.alkemy.DisneyAPIMickaelaTarazaga.exceptions.*;
 import com.alkemy.DisneyAPIMickaelaTarazaga.entities.Character;
-import io.swagger.v3.oas.annotations.Operation;
+
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.media.Content;
-import io.swagger.v3.oas.annotations.media.Schema;
-import io.swagger.v3.oas.annotations.responses.ApiResponse;
-import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
-import lombok.RequiredArgsConstructor;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,11 +16,10 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+
 @Tag(name = "Characters")
 @RestController
 @RequestMapping("/characters")
-@SecurityRequirement(name = "bearerAuth")
 public class CharacterController {
 
 	@Autowired

@@ -5,7 +5,8 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-
+@Getter
+@Setter
 public class MovieSlimDto {
 
     private Long id;
@@ -13,37 +14,6 @@ public class MovieSlimDto {
     private String title;
     private LocalDateTime creationDate;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getImage() {
-        return image;
-    }
-
-    public void setImage(String image) {
-        this.image = image;
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public LocalDateTime getCreationDate() {
-        return creationDate;
-    }
-
-    public void setCreationDate(LocalDateTime creationDate) {
-        this.creationDate = creationDate;
-    }
-
+   
     
 }

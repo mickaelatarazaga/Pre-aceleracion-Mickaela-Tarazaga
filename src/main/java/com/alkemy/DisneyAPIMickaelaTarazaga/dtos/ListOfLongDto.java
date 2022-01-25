@@ -7,20 +7,13 @@ import lombok.Setter;
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-
+@Getter
+@Setter
 public class ListOfLongDto {
 
     @JsonAlias({"movies", "genres"})
     @NotEmpty
     private List<Long> list;
-
-    public List<Long> getList() {
-        return list;
-    }
-
-    public void setList(List<Long> list) {
-        this.list = list;
-    }
 
     
 

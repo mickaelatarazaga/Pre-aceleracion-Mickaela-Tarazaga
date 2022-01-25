@@ -23,11 +23,10 @@ import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
 
-@RequiredArgsConstructor
+
 @Tag(name = "Movies")
 @RestController
 @RequestMapping("/movies")
-@SecurityRequirement(name = "bearerAuth")
 public class MovieController {
 
 	@Autowired

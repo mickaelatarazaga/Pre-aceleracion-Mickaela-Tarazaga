@@ -4,19 +4,13 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
-
+@Getter
+@Setter
 @AllArgsConstructor
 public class LoginResponse {
 
     private String jwt;
 
-    public String getJwt() {
-        return jwt;
-    }
-
-    public void setJwt(String jwt) {
-        this.jwt = jwt;
-    }
 
     
 }
