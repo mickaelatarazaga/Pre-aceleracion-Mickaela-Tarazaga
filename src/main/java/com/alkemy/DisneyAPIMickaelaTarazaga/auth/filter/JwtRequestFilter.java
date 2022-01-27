@@ -16,11 +16,13 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import lombok.AllArgsConstructor;
 
+//EL FILTRO SE EJECUTA CADA VEZ QUE LLEGUE UN REQUEST
 @Component
+@AllArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
 
-    // ATTRIBUTES
     private UserDetailsCustomService userDetailsCustomService;
     private JwtUtils jwtUtil;
     private AuthenticationManager authenticationManager;
@@ -34,49 +36,37 @@ public class JwtRequestFilter extends OncePerRequestFilter {
         this.jwtUtil = jwtUtil;
         this.authenticationManager = authenticationManager;
     }
-
-    /**
-     * Filters every request before processing. Looks in the request header for an attribute called "Authorization" with a
-     * String value starting with 'Bearer ' followed by a valid token. If it exists, the method takes that token a looks for
-     * the username related to it. Then, looks for its UserDetails and validates the data setting the Authorization request
-     * in the Security Context Holder
-     *
-     * @param request
-     * @param response
-     * @param filterChain
-     * @throws ServletException
-     * @throws IOException
-     */
+  
+    //QUE DEBE HACER EL FILTRO CUANDO SE EJECUTA
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
 
-        // Gets Authorization Token from Header
+        //SOLICITO EL HEADER POR NOMBRE "AUTHORIZATION"
         final String authorizationHeader = request.getHeader("Authorization");
 
+        //CREO VARIABLES
         String username = null;
         String jwt = null;
 
-        // If there was any token in the Header and it starts with 'Bearer', it saves the token value and the username
+        // Si había algún token en el encabezado y comienza con 'Bearer', guarda el valor del token y el nombre de usuario
         if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
-            jwt = authorizationHeader.substring(7);
+            jwt = authorizationHeader.substring(7);//Saca los primeros 7 caracteres (Bearer )para obtener el valor real
             username = jwtUtil.extractUsername(jwt);
         }
 
-        // If username has value and there is no authentication in SecurityContextHolder, it validates the former and sets it in the latter
+        // Si el nombre de usuario tiene valor y no hay autenticación en SecurityContextHolder, valida el primero y lo establece en el segundo
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            // Gets UserDetails using the custom service
+            // Obtiene UserDetails usando el servicio personalizado
             UserDetails userDetails = userDetailsCustomService.loadUserByUsername(username);
-
-            // Validates the token and creates the Authentication Object
+            // Valida el token y crea el objeto de autenticación
             if (jwtUtil.validateToken(jwt, userDetails)) {
                 UsernamePasswordAuthenticationToken authReq =
                         new UsernamePasswordAuthenticationToken(userDetails.getUsername(), userDetails.getPassword());
 
                 Authentication auth = authenticationManager.authenticate(authReq);
 
-                // Set auth in context
+                // Establecer autenticación en contexto
                 SecurityContextHolder.getContext().setAuthentication(auth);
 
             }

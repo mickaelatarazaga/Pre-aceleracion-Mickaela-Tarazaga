@@ -26,7 +26,7 @@ public class MovieDto {
     private String image;
 
     @NotNull(message = "Date can't be null")
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     private String creationDate;
 
     @NotNull(message = "Score can't be null")
