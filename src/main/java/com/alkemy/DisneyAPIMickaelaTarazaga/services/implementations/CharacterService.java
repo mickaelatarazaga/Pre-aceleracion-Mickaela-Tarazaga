@@ -18,9 +18,7 @@ import java.util.stream.Collectors;
 @Service
 public class CharacterService implements ICharacterService {
 
-	@Autowired
     private CharacterRepository characterRepository;
-	@Autowired
     private MovieRepository movieRepository;
 
     @Override
@@ -89,7 +87,7 @@ public class CharacterService implements ICharacterService {
 
         } else {
 
-            throw new ResourceNotFoundException("Check that all the movies you want to add to the character already exist");
+            throw new ResourceNotFoundException("Make sure all movies you want to add to the character already exist on the server");
 
         }
 

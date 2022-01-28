@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @SQLDelete(sql= "UPDATE movie SET deleted = true WHERE id=?")
 @Where(clause="deleted=false")
@@ -27,6 +28,7 @@ public class Movie {
     private String title;
     
     @Column(name = "creation_date")
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
     private LocalDateTime creationDate;
         
     private Integer score;

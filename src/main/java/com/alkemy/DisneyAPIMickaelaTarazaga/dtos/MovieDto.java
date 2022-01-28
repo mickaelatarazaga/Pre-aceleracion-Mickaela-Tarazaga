@@ -27,7 +27,7 @@ public class MovieDto {
 
     @NotNull(message = "Date can't be null")
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    private LocalDateTime creationDate;
+    private String creationDate;
 
     @NotNull(message = "Score can't be null")
     @Min(value = 0, message = "Score must be greater or equal to 0")

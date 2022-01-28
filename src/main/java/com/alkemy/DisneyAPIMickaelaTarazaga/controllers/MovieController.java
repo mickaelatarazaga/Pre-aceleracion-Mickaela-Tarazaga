@@ -24,15 +24,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+@RequiredArgsConstructor
 @Tag(name = "Movies")
 @RestController
 @RequestMapping("/movies")
 public class MovieController {
-
-	@Autowired
-    private MapStructMapper mapStructMapper;
-	@Autowired
-    private IMovieService movieService;
+	
+    private final MapStructMapper mapStructMapper;
+     
+    private final IMovieService movieService;
 
     
     @GetMapping()
@@ -106,7 +106,7 @@ public class MovieController {
 
     }
 
-   
+    
     @PatchMapping("/{id}")
     public ResponseEntity<MovieDto> updateMovie(@Valid @RequestBody MovieDto movie, @PathVariable("id") Long id){
 

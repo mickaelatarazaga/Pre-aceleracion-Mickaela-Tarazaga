@@ -12,7 +12,7 @@ public class MovieSlimDto {
     private Long id;
     private String image;
     private String title;
-    private LocalDateTime creationDate;
+    private String creationDate;
 
    
     
