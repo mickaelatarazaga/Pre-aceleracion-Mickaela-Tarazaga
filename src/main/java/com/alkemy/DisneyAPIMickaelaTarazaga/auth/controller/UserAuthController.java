@@ -3,6 +3,7 @@ package com.alkemy.DisneyAPIMickaelaTarazaga.auth.controller;
 import com.alkemy.DisneyAPIMickaelaTarazaga.auth.dto.AuthenticationRequest;
 import com.alkemy.DisneyAPIMickaelaTarazaga.auth.dto.AuthenticationResponse;
 import com.alkemy.DisneyAPIMickaelaTarazaga.auth.dto.UserDTO;
+import com.alkemy.DisneyAPIMickaelaTarazaga.auth.service.JwtUtils;
 import com.alkemy.DisneyAPIMickaelaTarazaga.auth.service.UserDetailsCustomService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,7 @@ public class UserAuthController {
 
     private UserDetailsCustomService userDetailsCustomService;
     
+    
 
     @Autowired
     public UserAuthController(UserDetailsCustomService userDetailsCustomService) {
@@ -38,6 +40,7 @@ public class UserAuthController {
     @PostMapping("/signin")
     public ResponseEntity<AuthenticationResponse> signIn(@RequestBody AuthenticationRequest authRequest) throws Exception {
         final String jwt = userDetailsCustomService.signIn(authRequest);
+        
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
     }
 }

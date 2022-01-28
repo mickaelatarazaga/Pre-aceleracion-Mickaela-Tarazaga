@@ -35,10 +35,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         auth.userDetailsService(userDetailsCustomService);
     }
 
-    //MÉTDO QUE ENCRIPTA LA CONTRASEÑA
+    //MÉTDO QUE DEBERÍA ENCRIPTAR LA CONTRASEÑA
+    //COMO NO ES UNA BUENA PRÁCTICA, LO PONE DEPRECADO
     @Bean
     public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+        return NoOpPasswordEncoder.getInstance();
     }
       
     //CONFIGURAR QUIEN ES EL MANEJADOR DE LA AUTENTIFICACIÓN

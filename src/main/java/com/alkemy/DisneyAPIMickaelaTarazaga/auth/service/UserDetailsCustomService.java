@@ -18,6 +18,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 @Service
 public class UserDetailsCustomService implements UserDetailsService {
@@ -26,8 +27,8 @@ public class UserDetailsCustomService implements UserDetailsService {
     private JwtUtils jwtTokenUtil;
     private AuthenticationManager authenticationManager;
 
-//    @Autowired
-//    private EmailService emailService;
+    @Autowired
+    private EmailService emailService;
 
     @Autowired
     public void setAttributes(
@@ -52,12 +53,12 @@ public class UserDetailsCustomService implements UserDetailsService {
 
     //
     public boolean save(UserDTO userDTO) {
-           UserEntity userEntity = new UserEntity();
+        UserEntity userEntity = new UserEntity();
         userEntity.setUsername(userDTO.getUsername());
         userEntity.setPassword(userDTO.getPassword());
         UserEntity entitySaved = userRepository.save(userEntity);
-//        if (userEntity != null)
-//            emailService.sendWelcomeEmailTo(userEntity.getUsername());
+        if (userEntity != null)
+            emailService.sendWelcomeEmailTo(userEntity.getUsername());
         return entitySaved != null;
     }
 
@@ -76,6 +77,7 @@ public class UserDetailsCustomService implements UserDetailsService {
             );
             userDetails = (UserDetails) auth.getPrincipal();
             return jwtTokenUtil.generateToken(userDetails);
+            
         } catch (BadCredentialsException ex) {
             throw new Exception("Incorrect username or password.", ex);
         }

@@ -20,10 +20,8 @@ import java.util.stream.Collectors;
 @Service
 public class MovieService implements IMovieService {
 
-	@Autowired
-    private MovieRepository movieRepository;
-	@Autowired
-    private GenreRepository genreRepository;
+    private final MovieRepository movieRepository;
+    private final GenreRepository genreRepository;
 
     @Override
     public List<Movie> getAll() {
@@ -52,7 +50,7 @@ public class MovieService implements IMovieService {
     @Override
     public Movie findById(Long movieId) {
 
-        return movieRepository.findById(movieId).orElseThrow();
+        return movieRepository.findById(movieId).orElseThrow(() -> new ResourceNotFoundException("No Movie with ID : " + movieId));
 
     }
 
@@ -109,7 +107,7 @@ public class MovieService implements IMovieService {
 
         } else {
 
-            throw new ResourceNotFoundException("Check that all the movies you want to add to the character already exist");
+            throw new ResourceNotFoundException("Make sure all movies you want to add to the character already exist on the server");
 
         }
 

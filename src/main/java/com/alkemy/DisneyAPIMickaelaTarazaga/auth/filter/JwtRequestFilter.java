@@ -40,7 +40,7 @@ public class JwtRequestFilter extends OncePerRequestFilter {
     //QUE DEBE HACER EL FILTRO CUANDO SE EJECUTA
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+            throws ServletException, IOException{
 
         //SOLICITO EL HEADER POR NOMBRE "AUTHORIZATION"
         final String authorizationHeader = request.getHeader("Authorization");

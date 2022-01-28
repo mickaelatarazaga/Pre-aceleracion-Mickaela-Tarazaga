@@ -5,6 +5,7 @@ import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.*;
 import com.alkemy.DisneyAPIMickaelaTarazaga.entities.Character;
 
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,21 +16,22 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
 
-
+@RequiredArgsConstructor
 @Tag(name = "Characters")
 @RestController
 @RequestMapping("/characters")
 public class CharacterController {
 
-	@Autowired
-    private MapStructMapper mapStructMapper;
-	@Autowired
-    private  ICharacterService characterService;
+	
+    private final  MapStructMapper mapStructMapper;
+    
+    private final ICharacterService characterService;
 
     
     @GetMapping()
-    public ResponseEntity<List<CharacterSlimDto>> getAllCharacters() {
+    public ResponseEntity<List<CharacterSlimDto>> getAllCSSSharacters() {
 
         return new ResponseEntity<>(mapStructMapper.charactersToCharacterSlimDtos(characterService.getAll()), HttpStatus.OK);
 

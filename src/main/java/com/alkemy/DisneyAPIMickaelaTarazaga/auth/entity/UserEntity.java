@@ -11,7 +11,7 @@ import javax.validation.constraints.Size;
 @Table(name = "user")
 @Getter
 @Setter
-public class UserEntity {
+public class UserEntity  {
 
     // ATTRIBUTES
     @Id
