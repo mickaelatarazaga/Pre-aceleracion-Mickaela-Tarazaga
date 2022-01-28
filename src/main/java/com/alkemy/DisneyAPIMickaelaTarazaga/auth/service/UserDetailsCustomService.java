@@ -57,8 +57,8 @@ public class UserDetailsCustomService implements UserDetailsService {
         userEntity.setUsername(userDTO.getUsername());
         userEntity.setPassword(userDTO.getPassword());
         UserEntity entitySaved = userRepository.save(userEntity);
-        if (userEntity != null)
-            emailService.sendWelcomeEmailTo(userEntity.getUsername());
+        if (userEntity != null){
+            emailService.sendWelcomeEmailTo(userEntity.getUsername());}
         return entitySaved != null;
     }
 
