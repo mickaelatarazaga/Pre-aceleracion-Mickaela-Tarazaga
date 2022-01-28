@@ -21,13 +21,13 @@ Es un desarrollo Backend que expone la información para ser utilizada por cualq
 * Ejecute estos comandos: ``` mvn clean install ```  y luego ``` mvn spring-boot:run ``` 
 * Abra su navegador web y vaya a ``` http://localhost:8080/swagger-ui.html ```  para ver los documentos de API e interactuar con los endpoints
 
-## Autora ✒️
+## Developer ✒️
 
 * **Mickaela Tarazaga** - [Perfil de LinkedIn](https://www.linkedin.com/in/mickaelatarazaga/)
 
 ## ESTE PROYECTO ES PARTE DE LA ACELERACIÓN DE [ALKEMY](https://www.alkemy.org/) LABS ❤️
 
-* Mi agradecimiento para todos ellos que brindan estas oportunidades y nos facilitan el camino para ingresar al mundo laboral en el área IT.
+* Mi agradecimiento para ellos que brindan esta oportunidad y nos facilitan el camino para ingresar al mundo laboral en el área IT.
 
 
 
