@@ -12,14 +12,15 @@ Es un desarrollo Backend que expone la información para ser utilizada por cualq
 * [Lombok](https://projectlombok.org/) - Biblioteca de Java que permite dejar el código más limpio y legible, a través de anotaciones.
 * [Mapstruct](https://mapstruct.org/) - Generador de código que simplifica la implementación de asignaciones entre tipos de beans de Java.
 * [JWT](https://jwt.io/) - Decodificar, verificar y generar JWT.
-* [Postman](https://www.postman.com/) - plataforma API para construir y usar API.
+* [Postman](https://www.postman.com/) - Plataforma para documentar y realizar pruebas en la API.
 * [SendGrid](https://sendgrid.com/) - Email Delivery Service
 
 ### Para ejecutar la API 🔧
 * Descargar el proyecto o clonarlo
 * Abra la consola y vaya a la carpeta del proyecto.
 * Ejecute estos comandos: ``` mvn clean install ```  y luego ``` mvn spring-boot:run ``` 
-* Abra su navegador web y vaya a ``` http://localhost:8080/swagger-ui.html ```  para ver los documentos de API e interactuar con los endpoints
+* Ingrese a su cuenta de [Postman](https://web.postman.co/) e importe la colección que le dejo en el repositorio
+* Puede ver la documentación de la API e interactuar con los endpoints
 
 ## Developer ✒️
 
