@@ -35,8 +35,7 @@ public class Character {
     private String history;
     
     private boolean deleted = Boolean.FALSE;
-    
-    
+        
     //NOMBRE DE LA TABLA INTERMEDIA
     @JoinTable(name = "character_movie",
             //COMO SE JOINEA DE ESTE LADO

@@ -7,11 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class ResourceNotFoundException extends RuntimeException {
-
+public class InvalidException extends RuntimeException {
     private String message;
-
-
-        
 
 }

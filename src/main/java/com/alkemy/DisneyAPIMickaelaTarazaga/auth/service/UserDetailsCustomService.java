@@ -44,10 +44,8 @@ public class UserDetailsCustomService implements UserDetailsService {
     //CONFIGURO COMO VOY A IR A BUSCAR EL USUARIO
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-
         UserEntity userEntity = userRepository.findByUsername(username);
-        if (userEntity == null)
-            throw new UsernameNotFoundException("Username or password not found.");
+        if (userEntity == null) throw new UsernameNotFoundException("Username or password not found.");
         return new User(userEntity.getUsername(), userEntity.getPassword(), Collections.emptyList());// SI LO ENCUENTRO GENERO UN NUEVO USUARIO DE SPRING SECURITY QUE SE MANEJA EN EL FILTRO
     }
 
@@ -57,8 +55,7 @@ public class UserDetailsCustomService implements UserDetailsService {
         userEntity.setUsername(userDTO.getUsername());
         userEntity.setPassword(userDTO.getPassword());
         UserEntity entitySaved = userRepository.save(userEntity);
-        if (userEntity != null){
-            emailService.sendWelcomeEmailTo(userEntity.getUsername());}
+        if (userEntity != null){emailService.sendWelcomeEmailTo(userEntity.getUsername());}
         return entitySaved != null;
     }
 
@@ -69,17 +66,11 @@ public class UserDetailsCustomService implements UserDetailsService {
      * @throws Exception
      */
     public String signIn(AuthenticationRequest authRequest) throws Exception {
-
         UserDetails userDetails;
         try {
-            Authentication auth = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword())
-            );
+            Authentication auth = authenticationManager.authenticate( new UsernamePasswordAuthenticationToken(authRequest.getUsername(), authRequest.getPassword()));
             userDetails = (UserDetails) auth.getPrincipal();
             return jwtTokenUtil.generateToken(userDetails);
-            
-        } catch (BadCredentialsException ex) {
-            throw new Exception("Incorrect username or password.", ex);
-        }
+        } catch (BadCredentialsException ex) {throw new Exception("Incorrect username or password.", ex);}
     }
 }

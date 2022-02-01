@@ -23,32 +23,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     private UserDetailsCustomService userDetailsCustomService;
     private JwtRequestFilter jwtRequestFilter;
 
-    @Autowired
-    public void setAttributes(UserDetailsCustomService userDetailsCustomService, @Lazy JwtRequestFilter jwtRequestFilter) {
-        this.userDetailsCustomService = userDetailsCustomService;
-        this.jwtRequestFilter = jwtRequestFilter;
-    }
+    @Autowired 
+    public void setAttributes(UserDetailsCustomService userDetailsCustomService, @Lazy JwtRequestFilter jwtRequestFilter) 
+    { this.userDetailsCustomService = userDetailsCustomService; this.jwtRequestFilter = jwtRequestFilter; }
    
     //DEFINO MI PROPIO DETALLE DE USUARIOS
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsCustomService);
-    }
+    @Override 
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception { auth.userDetailsService(userDetailsCustomService); }
 
     //MÉTDO QUE DEBERÍA ENCRIPTAR LA CONTRASEÑA
     //COMO NO ES UNA BUENA PRÁCTICA, LO PONE DEPRECADO
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return NoOpPasswordEncoder.getInstance();
-    }
+    @Bean 
+    public PasswordEncoder passwordEncoder() { return NoOpPasswordEncoder.getInstance(); }
       
     //CONFIGURAR QUIEN ES EL MANEJADOR DE LA AUTENTIFICACIÓN
     //UTILIZO EL QUE PROVEE SPRING SECURITY
-    @Override
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+    @Override 
+    @Bean 
+    public AuthenticationManager authenticationManagerBean() throws Exception { return super.authenticationManagerBean(); }
     
     //CONFIGURAR COMO SE COMPORTA EL HTTP SECURITY
     @Override

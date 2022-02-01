@@ -30,12 +30,8 @@ public class EmailSeviceImpl implements EmailService {
 
     @Override
     public void sendWelcomeEmailTo(String to) {
-
-      
         // SendGrid API Key as environment variable
         String apiKey = environment.getProperty("EMAIL_API_KEY");
-        
-
         // Defining parts of the email like sender, recipient, content and subject
         Email fromEmail = new Email(emailSender);
         Email toEmail = new Email(to);
@@ -44,27 +40,20 @@ public class EmailSeviceImpl implements EmailService {
                 "Welcome to Disney API! A challenge from Alkemy Labs by Mickaela Tarazaga."
         );
         String subject = "Getting Started at Disney API";
-
         // Creating the Email with all its parts, a SendGrid Object with the API key and a Request
         Mail mail = new Mail(fromEmail, subject, toEmail, content);
         SendGrid sendGrid = new SendGrid(apiKey);
         Request request = new Request();
-
         // Defining request attributes and saving the response of that request
         try {
             request.setMethod(Method.POST);
             request.setEndpoint("mail/send");
             request.setBody(mail.build());
-
             Response response = sendGrid.api(request);
-
             //Showing the response details in console
             System.out.println(response.getStatusCode());
             System.out.println(response.getBody());
             System.out.println(response.getHeaders());
-
-        } catch (IOException e) {
-            System.out.println("Error trying to send the email.");
-        }
+        } catch (IOException e) {System.out.println("Error trying to send the email.");}
     }
 }

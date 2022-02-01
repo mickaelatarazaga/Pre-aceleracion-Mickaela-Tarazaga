@@ -1,4 +1,5 @@
 package com.alkemy.DisneyAPIMickaelaTarazaga.services;
+import com.alkemy.DisneyAPIMickaelaTarazaga.dtos.MovieDto;
 import  com.alkemy.DisneyAPIMickaelaTarazaga.entities.*;
 
 import java.util.List;
@@ -25,5 +26,7 @@ public interface IMovieService {
     void addGenres(Long movieId, List<Long> genresIds);
 
     void removeGenres(Long movieId, List<Long> genresIds);
+    
+    List<MovieDto> returnEmptyMovieDto();
 
 }

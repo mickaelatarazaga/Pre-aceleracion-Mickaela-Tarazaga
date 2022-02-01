@@ -7,7 +7,7 @@ import java.util.List;
 import org.mapstruct.*;
 
 @Mapper(componentModel = "spring")
-public interface MapStructMapper  {
+public interface CharacterMapper  {
 
     CharacterSlimDto characterToCharacterSlimDto(Character character);
 
@@ -23,19 +23,5 @@ public interface MapStructMapper  {
 
     List<CharacterDto> charactersToCharacterDtos(List<Character> characters);
 
-    MovieSlimDto movieToMovieSlimDto(Movie movie);
-
-    MovieDto movieToMovieDto(Movie movie);
-
-    Movie movieDtoToMovie(MovieDto movie);
-
-    @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
-            nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-    Movie updateMovieFromDto(MovieDto movieDto, @MappingTarget Movie movie);
-
-    List<MovieSlimDto> moviesToMovieSlimDtos(List<Movie> movies);
-
-    List<MovieDto> moviesToMovieDtos(List<Movie> movies);
-
-    List<GenreSlimDto> genresToGenreSlimDtos(List<Genre> genres);
+    
 }

@@ -23,24 +23,19 @@ import javax.validation.Valid;
 public class UserAuthController {
 
     private UserDetailsCustomService userDetailsCustomService;
-    
-    
+      
 
-    @Autowired
-    public UserAuthController(UserDetailsCustomService userDetailsCustomService) {
-        this.userDetailsCustomService = userDetailsCustomService;
-    }
+    @Autowired 
+    public UserAuthController(UserDetailsCustomService userDetailsCustomService){ 
+        this.userDetailsCustomService = userDetailsCustomService; }
  
-    @PostMapping("/signup")
-    public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO dto) {
-        userDetailsCustomService.save(dto);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+    @PostMapping("/signup") 
+    public ResponseEntity<AuthenticationResponse> signUp(@Valid @RequestBody UserDTO dto) { 
+        userDetailsCustomService.save(dto); 
+        return ResponseEntity.status(HttpStatus.CREATED).build(); }
 
-    @PostMapping("/signin")
+    @PostMapping("/signin") 
     public ResponseEntity<AuthenticationResponse> signIn(@RequestBody AuthenticationRequest authRequest) throws Exception {
-        final String jwt = userDetailsCustomService.signIn(authRequest);
-        
-        return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }
+        final String jwt = userDetailsCustomService.signIn(authRequest); 
+        return ResponseEntity.ok(new AuthenticationResponse(jwt)); }
 }

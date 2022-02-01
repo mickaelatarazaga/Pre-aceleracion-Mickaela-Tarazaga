@@ -25,103 +25,78 @@ import lombok.RequiredArgsConstructor;
 public class CharacterController {
 
 	
-    private final  MapStructMapper mapStructMapper;
+    private final CharacterMapper characterMapper;
+    
+    private final MovieMapper movieMapper;
     
     private final ICharacterService characterService;
 
     
     @GetMapping()
-    public ResponseEntity<List<CharacterSlimDto>> getAllCSSSharacters() {
-
-        return new ResponseEntity<>(mapStructMapper.charactersToCharacterSlimDtos(characterService.getAll()), HttpStatus.OK);
-
-    }
+    public ResponseEntity<List<CharacterSlimDto>> getAllCharacters() {
+        return new ResponseEntity<>(characterMapper.charactersToCharacterSlimDtos(characterService.getAll()), HttpStatus.OK);
+}
 
     
     @GetMapping("/{id}")
     public ResponseEntity<CharacterDto> getCharacterById(@PathVariable("id") Long id) {
-
-        return new ResponseEntity<>(mapStructMapper.characterToCharacterDto(characterService.findById(id)), HttpStatus.OK);
-
+        return new ResponseEntity<>(characterMapper.characterToCharacterDto(characterService.findById(id)), HttpStatus.OK);
     }
 
     @GetMapping(params = "name")
     public ResponseEntity<List<CharacterDto>> findCharacterByName(@Parameter(description = "Filter by name") @RequestParam(value = "name", required = false) String name) {
-
-        return new ResponseEntity<>(mapStructMapper.charactersToCharacterDtos(characterService.findByName(name)), HttpStatus.OK);
-
+        return new ResponseEntity<>(characterMapper.charactersToCharacterDtos(characterService.findByName(name)), HttpStatus.OK);
     }
 
     @GetMapping(params="age")
     public ResponseEntity<List<CharacterDto>> findCharacterByAge(@Parameter(description = "Filter by age") @RequestParam(value = "age", required = false) Integer age) {
-
-        return new ResponseEntity<>(mapStructMapper.charactersToCharacterDtos(characterService.findByAge(age)), HttpStatus.OK);
-
+        return new ResponseEntity<>(characterMapper.charactersToCharacterDtos(characterService.findByAge(age)), HttpStatus.OK);
     }
 
     @GetMapping(params="movie")
     public ResponseEntity<List<CharacterDto>> findCharacterByMovieId(@Parameter(description = "Filter by MovieID") @RequestParam(value = "movie", required = false) Long movieId) {
-
-        return new ResponseEntity<>(mapStructMapper.charactersToCharacterDtos(characterService.findByMovieId(movieId)), HttpStatus.OK);
-
+        return new ResponseEntity<>(characterMapper.charactersToCharacterDtos(characterService.findByMovieId(movieId)), HttpStatus.OK);
     }
 
     
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteCharacterById(@PathVariable("id") Long id) {
-
         characterService.delete(id);
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
     
     @PostMapping()
     public ResponseEntity<CharacterDto> saveCharacter(@Valid @RequestBody CharacterDto character) {
-
-        Character characterCreated = characterService.save(mapStructMapper.characterDtoToCharacter(character));
-
-        return new ResponseEntity<>(mapStructMapper.characterToCharacterDto(characterCreated), HttpStatus.CREATED);
-
+        Character characterCreated = characterService.save(characterMapper.characterDtoToCharacter(character));
+        return new ResponseEntity<>(characterMapper.characterToCharacterDto(characterCreated), HttpStatus.CREATED);
     }
 
     
     @PatchMapping("/{id}")
     public ResponseEntity<CharacterDto> updateCharacter(@Valid @RequestBody CharacterDto character, @PathVariable("id") Long id) {
-
-        Character characterUpdated = characterService.save(mapStructMapper.updateCharacterFromDto(character, characterService.findById(id)));
-
-        return new ResponseEntity<>(mapStructMapper.characterToCharacterDto(characterUpdated), HttpStatus.OK);
-
+        Character characterUpdated = characterService.save(characterMapper.updateCharacterFromDto(character, characterService.findById(id)));
+        return new ResponseEntity<>(characterMapper.characterToCharacterDto(characterUpdated), HttpStatus.OK);
     }
 
     
     @GetMapping("{id}/movies")
     public ResponseEntity<List<MovieSlimDto>> getCharacterMovies(@PathVariable("id") Long characterId) {
-
-        return new ResponseEntity<>(mapStructMapper.moviesToMovieSlimDtos(new ArrayList<>(characterService.findById(characterId).getMovies())), HttpStatus.OK);
-
+        return new ResponseEntity<>(movieMapper.moviesToMovieSlimDtos(new ArrayList<>(characterService.findById(characterId).getMovies())), HttpStatus.OK);
     }
 
     
     @PutMapping("{id}/movies")
     public ResponseEntity<?> addMoviesToCharacter(@Valid @RequestBody ListOfLongDto moviesIds, @PathVariable("id") Long characterId) {
-
         characterService.addMovies(characterId, moviesIds.getList());
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
     
     @DeleteMapping("{id}/movies")
     public ResponseEntity<?> removeMoviesFromCharacter(@Valid @RequestBody ListOfLongDto moviesIds, @PathVariable("id") Long characterId) {
-
         characterService.removeMovies(characterId, moviesIds.getList());
-
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-
     }
 
 }
