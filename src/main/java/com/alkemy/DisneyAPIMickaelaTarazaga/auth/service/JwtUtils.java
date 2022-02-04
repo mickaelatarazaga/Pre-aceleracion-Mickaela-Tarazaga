@@ -69,8 +69,10 @@ public class JwtUtils {
      * @return
      */
     private String createToken(Map<String, Object> claims, String subject) {
+        //Token expires in 30 minutes
+        final int EXPIRATION_TIME = 60000 * 30;
         return Jwts.builder().setClaims(claims).setSubject(subject).setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 10)) // TOKEN VALID FOR 10 HOURS
+                .setExpiration(new Date(System.currentTimeMillis() + EXPIRATION_TIME))
                 .signWith(SignatureAlgorithm.HS256, SECRET_KEY).compact();
     }
 

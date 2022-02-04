@@ -5,6 +5,7 @@ import com.alkemy.DisneyAPIMickaelaTarazaga.auth.service.UserDetailsCustomServic
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -17,6 +18,7 @@ import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+@Configuration
 @EnableWebSecurity
 public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
@@ -31,8 +33,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override 
     protected void configure(AuthenticationManagerBuilder auth) throws Exception { auth.userDetailsService(userDetailsCustomService); }
 
-    //MÉTDO QUE DEBERÍA ENCRIPTAR LA CONTRASEÑA
-    //COMO NO ES UNA BUENA PRÁCTICA, LO PONE DEPRECADO
+    //NO ESTOY ENCRIPTANDO LA CONTRASEÑA, COMO NO ES UNA BUENA PRÁCTICA, LO PONE DEPRECADO
     @Bean 
     public PasswordEncoder passwordEncoder() { return NoOpPasswordEncoder.getInstance(); }
       
@@ -46,7 +47,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.csrf().disable()
-                .authorizeRequests().antMatchers("/auth/*" ).permitAll()// CONFIGURO A QUE ENDPOINT LE APLICO SEGURIDAD 
+                .authorizeRequests().antMatchers("/auth/*" ).permitAll()// CONFIGURO A QUE ENDPOINT NO LE APLICO SEGURIDAD 
                 .anyRequest().authenticated()
                 .and().exceptionHandling()
                 .and().sessionManagement()
